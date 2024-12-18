@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 export const useGeneralHook2 = () => {
@@ -7,6 +7,10 @@ export const useGeneralHook2 = () => {
   const [isLoadedSubject, setIsLoadedSubject] = useState(true);
   const [isLoadedDetailsSubject, setIsLoadedDetailsSubject] = useState(true);
   const { idSubject } = useParams();
+  const [isOpenFormComment, setIsOpenFormComment] = useState(false);
+  const [isLoadedComment, setIsLoadedComment] = useState(true);
+  const [isLoadedDetailsComment, setIsLoadedDetailsComment] = useState(true);
+  const { idComment } = useParams();
   
   return {
     isOpenFormSubject, 
@@ -16,5 +20,12 @@ export const useGeneralHook2 = () => {
     isLoadedDetailsSubject, 
     setIsLoadedDetailsSubject,
     idSubject,
+    isOpenFormComment, 
+    setIsOpenFormComment,
+    isLoadedComment, 
+    setIsLoadedComment,
+    isLoadedDetailsComment, 
+    setIsLoadedDetailsComment,
+    idComment,
   };
 };

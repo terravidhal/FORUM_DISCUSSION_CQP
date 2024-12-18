@@ -11,7 +11,7 @@ const { authenticate, checkPermissions, logActivityMiddleware } = require("../co
 
 module.exports = (app) => {
   app.post(
-    "/api/comment",
+    "/api/comments",
     authenticate,
     logActivityMiddleware,
     createNewComment
@@ -30,7 +30,7 @@ module.exports = (app) => {
   );
 
   app.patch(
-    "/api/subjects/:commentId",
+    "/api/comments/:commentId",
     authenticate,
     logActivityMiddleware,
     voteOnComment

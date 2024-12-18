@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/interceptors/axios.config";
 import { useGeneralHook2 } from "@/hooks/generalHook2";
-import { VoteSubjectSchema, createSubject, createSubjectSchema, voteSubject } from "@/interfaces/index2";
+import { VoteSubjectSchema, createComment, createCommentSchema, createSubject, createSubjectSchema, voteComment, voteCommentSchema, voteSubject } from "@/interfaces/index2";
 
 
 
@@ -141,3 +141,136 @@ export const useSubjects = () => {
 };
 
 
+
+//  comments hook
+export const useComments = () => {
+  const queryClient = useQueryClient();
+  const {
+    isOpenFormComment, 
+    setIsOpenFormComment,
+    isLoadedComment, 
+    setIsLoadedComment,
+    isLoadedDetailsComment, 
+    setIsLoadedDetailsComment,
+    idComment,
+  } = useGeneralHook2();
+
+  // create
+  const createComment = async (commentInfos: createComment) => {
+    try {
+      const result = createCommentSchema.safeParse(commentInfos);
+      if (!result?.success) {
+        Object.values(result.error)[0].map((elt: any) => {
+          toast.error(elt?.message);
+        });
+        return;
+      }
+      await axiosInstance.post("comments", commentInfos);
+      toast.success("add successfully!!");
+      setIsOpenFormComment(false);
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Error");
+    }
+  };
+  const { mutate: createCommentMutation } = useMutation({
+    mutationFn: createComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dataComment"] });
+    },
+  });
+
+  // vote comment
+  const voteComment = async (commentInfos: voteComment) => {
+    try {
+      const result = voteCommentSchema.safeParse(commentInfos);
+      if (!result?.success) {
+        Object.values(result.error)[0].map((elt: any) => {
+          toast.error(elt?.message);
+        });
+        return;
+      }
+  
+      await axiosInstance.patch(
+        "comments/" + commentInfos.commentId,
+        commentInfos
+      );
+
+      toast.success("updated successfully!!");
+      setIsOpenFormComment(false);
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Error updated");
+    }
+  };
+  const { mutate: voteCommentMutation } = useMutation({
+    mutationFn: voteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dataComment"] });
+    },
+  });
+
+
+
+  //delete
+  const deleteComment = async (commentInfos: any) => {
+    try {
+      await axiosInstance.delete("comments/" + commentInfos.commentId);
+
+      toast.success("deleted successfully!!");
+      setIsOpenFormComment(false);
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Error deleted");
+    }
+  };
+  const { mutate: deleteCommentMutation } = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dataComment"] });
+    },
+  });
+
+
+  // get All
+  const {
+    data: allComments,
+    error: errorGetComments,
+    isError: isErrorGetComments,
+  } = useQuery({
+    queryKey: ["dataComment"],
+    queryFn: async () => {
+      const { data } = await axiosInstance.get("comments"); 
+      setIsLoadedComment(false);
+      return data;
+    },
+    
+  });
+  if (isErrorGetComments) toast.error(errorGetComments.message || "Error");
+
+
+  // get Id
+  const { data: OneComment,
+          error: errorGetOneComments,
+          isError: isErrorGetOneComments, 
+        } = useQuery({
+    queryKey: ["dataOneSubject"],
+    queryFn: async () => {
+      const { data } = await axiosInstance.get("comments/" + idComment);
+      setIsLoadedDetailsComment(false);
+      return data;
+    },
+  });
+  if (isErrorGetOneComments) toast.error(errorGetOneComments.message || "Error");
+
+  return {
+    allComments,
+    createCommentMutation,
+    voteCommentMutation,
+    deleteCommentMutation,
+    isOpenFormComment,
+    setIsOpenFormComment,
+    OneComment,
+    setIsLoadedComment,
+    isLoadedComment,
+    isLoadedDetailsComment,
+    setIsLoadedDetailsComment,
+  };
+};
