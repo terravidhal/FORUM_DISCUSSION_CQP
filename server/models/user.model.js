@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema(
       enum: ["superAdmin", "Admin", "participants"],
       default: "participants",
     },
-    subjects: [
+    subjects: [ 
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Subject", 
