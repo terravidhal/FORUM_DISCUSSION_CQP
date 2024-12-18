@@ -11,7 +11,7 @@ const { authenticate, checkPermissions, logActivityMiddleware } = require("../co
 
 module.exports = (app) => {
   app.post(
-    "/api/subject",
+    "/api/subjects",
     authenticate,
     logActivityMiddleware,
     createNewSubject

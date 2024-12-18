@@ -21,11 +21,12 @@ import {
 } from "@/interfaces";
 import { useGeneralHook } from "@/hooks/generalHook";
 import axiosInstance from "@/interceptors/axios.config";
+import { useGeneralHook2 } from "@/hooks/generalHook2";
 
 
 
 
-
+// login hook
 export const useLogin = () => {
   const { isLogginSuccess, setIsLogginSuccess,
           logginError, 
@@ -59,10 +60,6 @@ export const useLogin = () => {
 
   const {
     mutate: loginMutation,
-   // isPending: isPendingLogin,
-   // isError: isErrorLogin,
-   // isSuccess: isSuccessLogin,
-   // error: errorLogin,
   } = useMutation({
     mutationFn: login,
     onSuccess: () => {
@@ -114,6 +111,112 @@ export const useLogout = () => {
     errorLogout,
   };
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // field hook
 export const useFields = () => {
