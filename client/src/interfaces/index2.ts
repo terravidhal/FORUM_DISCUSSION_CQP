@@ -41,8 +41,6 @@ export const SubjectSchema = z.object({
       })
     )
     .optional(),
-
-  isDeleted: z.boolean().optional(),
 });
 
 
@@ -69,13 +67,47 @@ export const createSubjectSchema = SubjectSchema.extend({
 });
 
 // Update Subject schema (for updating an existing subject)
-export const updateSubjectSchema = SubjectSchema.partial().extend({
-  idSubjectUpdt: z.string().optional(),
+export const VoteSubjectSchema = SubjectSchema.partial().extend({ 
+    _id: z.string().optional(),
+    title: z
+      .string()
+      .optional(),
+  
+    content: z
+      .string()
+      .optional(),
+  
+    author: z
+      .string()
+      .optional(),
+  
+    Comments: z.array(z.string()).optional(),
+  
+    tags: z
+      .array(z.enum(["science", "informatics", "history", "electronics"]))
+      .refine(tags => tags?.length > 0, { message: "At least one tag is required" })
+      .optional(),
+
+    ratings: z
+      .array(
+        z.object({
+          user: z
+            .string()
+            .min(24, { message: "User ID must be a valid ObjectId" })
+            .max(24, { message: "User ID must be a valid ObjectId" }),
+          value: z
+            .number()
+            .min(1, { message: "Rating must be at least 1" })
+            .max(5, { message: "Rating cannot exceed 5" })
+            .int({ message: "Rating must be an integer" }),
+        })
+      )
+      .optional(),
 });
 
 export type Subject = z.infer<typeof SubjectSchema>;
 export type createSubject = z.infer<typeof createSubjectSchema>;
-export type updateSubject = z.infer<typeof updateSubjectSchema>;
+export type voteSubject = z.infer<typeof VoteSubjectSchema>;
 
 
 

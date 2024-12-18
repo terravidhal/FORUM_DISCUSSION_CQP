@@ -6,7 +6,7 @@ import {
 } from "@/interfaces";
 import axiosInstance from "@/interceptors/axios.config";
 import { useGeneralHook2 } from "@/hooks/generalHook2";
-import { createSubject, createSubjectSchema } from "@/interfaces/index2";
+import { VoteSubjectSchema, createSubject, createSubjectSchema, voteSubject } from "@/interfaces/index2";
 
 
 
@@ -43,48 +43,40 @@ export const useSubjects = () => {
     },
   });
 
-  // update
-  const updateField = async (fieldInfos: updateField) => {
+  // vote subject
+  const voteSubject = async (subjectInfos: voteSubject) => {
     try {
-      const result = updateFieldSchema.safeParse(fieldInfos);
+      const result = VoteSubjectSchema.safeParse(subjectInfos);
       if (!result?.success) {
         Object.values(result.error)[0].map((elt: any) => {
           toast.error(elt?.message);
         });
         return;
       }
-     /* await axios.patch(
-        baseUrl + "fields/" + fieldInfos.idFieldUpdt,
-        fieldInfos,
-        {
-          withCredentials: true,
-        }
-      ); */
+  
       await axiosInstance.patch(
-        "fields/" + fieldInfos.idFieldUpdt,
-        fieldInfos
+        "subjects/" + subjectInfos.subjectId,
+        subjectInfos
       );
 
       toast.success("updated successfully!!");
-      setIsOpenFormField(false);
+      setIsOpenFormSubject(false);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Error updated");
     }
   };
-  const { mutate: updateFieldMutation } = useMutation({
-    mutationFn: updateField,
+  const { mutate: voteSubjectMutation } = useMutation({
+    mutationFn: voteSubject,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dataFields"] });
-      queryClient.invalidateQueries({ queryKey: ["dataChart2"] });
+      queryClient.invalidateQueries({ queryKey: ["dataSubject"] });
     },
   });
+
+
 
   //delete
   const deleteField = async (fieldInfos: any) => {
     try {
-    /*  await axios.delete(baseUrl + "fields/" + fieldInfos.idFieldUpdt, {
-        withCredentials: true,
-      }); */
       await axiosInstance.delete("fields/" + fieldInfos.idFieldUpdt);
 
       toast.success("deleted successfully!!");
