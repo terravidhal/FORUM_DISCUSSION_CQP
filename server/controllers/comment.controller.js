@@ -103,19 +103,50 @@ module.exports.createNewComment = async (req, res) => {
     const commentId = req.params.commentId;
   
     try {
+      // Find the comment by commentId
       const comment = await Comment.findById(commentId);
   
       if (!comment) {
         return res.status(404).json({ error: "Comment not found" });
       }
-      // Delete comment
+  
+      const { author, subjectId } = comment;
+  
+      // 1. Remove the comment ID from the Comments array subject
+      const subject = await Subject.findByIdAndUpdate(
+        subjectId,
+        { $pull: { Comments: commentId } }, // $pull : remove the comment from the Comments array
+        { new: true }
+      );
+  
+      // 2. If the user is the creator of the comment, remove the comment ID from their createdComments array
+      if (author) {
+        await User.findByIdAndUpdate(
+          author,
+          { $pull: { createdComments: commentId } }, 
+          { new: true }
+        );
+      }
+  
+      // 3. If the user is not the creator of the comment, remove the comment ID from their commentedComments array
+      const usersWhoCommented = await User.find({ commentedComments: commentId });
+      usersWhoCommented.forEach(async (user) => {
+        await User.findByIdAndUpdate(
+          user._id,
+          { $pull: { commentedComments: commentId } }, 
+          { new: true }
+        );
+      });
+  
+      // 4. Delete the comment from the Comment collection
       const result = await Comment.deleteOne({ _id: commentId });
   
-      res.json(result);
+      res.json({ message: "Comment deleted successfully", result, subject });
     } catch (err) {
       res.status(400).json(err);
     }
   };
+  
 
 
 

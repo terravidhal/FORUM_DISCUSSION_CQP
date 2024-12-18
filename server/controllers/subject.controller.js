@@ -65,23 +65,38 @@ module.exports.createNewSubject = async (req, res) => {
 
   
 
+
   module.exports.deleteSubject = async (req, res) => {
     const subjectId = req.params.subjectId;
   
     try {
+      // Find the subject by subjectId
       const subject = await Subject.findById(subjectId);
   
       if (!subject) {
         return res.status(404).json({ error: "Subject not found" });
       }
-      // Delete subject
+  
+      // Find the author (user) of the subject
+      const userId = subject.author;
+      if (userId) {
+        // Remove the subject ID from the user's subjects array
+        await User.findByIdAndUpdate(
+          userId,
+          { $pull: { subjects: subjectId } }, //  $pull : remove the subject from the array
+          { new: true }
+        );
+      }
+  
+      // Delete the subject
       const result = await Subject.deleteOne({ _id: subjectId });
   
-      res.json(result);
+      res.json({ message: "Subject deleted successfully", result });
     } catch (err) {
       res.status(400).json(err);
     }
   };
+  
 
 
 
