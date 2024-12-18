@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester");
+
+.ModalSevenKidsCodeVerif .cursive {
+  font-family: "Pinyon Script", cursive;
+}
+
+.ModalSevenKidsCodeVerif .sans {
+  font-family: "Open Sans", sans-serif;
+}
+
+.ModalSevenKidsCodeVerif .bold {
+  font-weight: bold;
+}
+
+.ModalSevenKidsCodeVerif .block {
+  display: block;
+}
+
+.ModalSevenKidsCodeVerif .underline {
+  padding: 5px;
+  margin-bottom: 15px;
+}
+
+.ModalSevenKidsCodeVerif .margin-0 {
+  margin: 0;
+}
+
+.ModalSevenKidsCodeVerif .padding-0 {
+  padding: 0;
+}
+
+.ModalSevenKidsCodeVerif .pm-empty-space {
+  height: 40px;
+  width: 100%;
+}
+
+.ModalSevenKidsCodeVerif .pm5-color {
+  color: orangered;
+}
+
+.ModalSevenKidsCodeVerif .pm-certificate-container {
+  width: 100%;
+  background-color: #65a25c;
+  color: #333;
+  font-family: "Open Sans", sans-serif;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.ModalSevenKidsCodeVerif .pm-certificate-container .outer-border {
+  width: 100%;
+  border: 2px solid #fff;
+  padding: 30px;
+}
+
+.ModalSevenKidsCodeVerif .pm-certificate-container .inner-border {
+  width: 100%;
+  border: 2px solid #fff;
+  padding: 4px;
+}
+
+.ModalSevenKidsCodeVerif .pm-certificate-container .pm-certificate-border {
+  width: 100%;
+  height: 520px;
+  border: 1px solid #e1e5f0;
+  background-color: rgba(255, 255, 255, 1);
+  background-image: none;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certificate-block {
+  width: 100%;
+  height: 200px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certificate-header {
+  margin-bottom: 10px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certificate-title {
+  position: relative;
+  top: 40px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certificate-title
+  h2 {
+  font-size: 34px !important;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certificate-body {
+  padding: 20px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certificate-body
+  .pm-name-text {
+  font-size: 20px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-earned {
+  margin: 15px 0 20px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-earned
+  .pm-earned-text {
+  font-size: 20px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-earned
+  .pm-credits-text {
+  font-size: 15px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-course-title
+  .pm-earned-text {
+  font-size: 20px;
+}
+
+.pm-certificate-container
+  .pm-certificate-border
+  .pm-course-title
+  .pm-credits-text {
+  font-size: 15px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certified {
+  font-size: 12px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certified
+  .underline {
+  margin-bottom: 5px;
+}
+
+.ModalSevenKidsCodeVerif
+  .pm-certificate-container
+  .pm-certificate-border
+  .pm-certificate-footer {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  width: 650px;
+  height: 100px;
+  position: relative;
+  left: 50%;
+  margin-left: -325px;
+  bottom: -105px;
+}
