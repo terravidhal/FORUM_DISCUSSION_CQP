@@ -1,9 +1,5 @@
 import { toast } from "sonner";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import {
-  createField,
-  createFieldSchema,
-} from "@/interfaces";
 import axiosInstance from "@/interceptors/axios.config";
 import { useGeneralHook2 } from "@/hooks/generalHook2";
 import { VoteSubjectSchema, createSubject, createSubjectSchema, voteSubject } from "@/interfaces/index2";
@@ -17,6 +13,11 @@ export const useSubjects = () => {
   const {
     isOpenFormSubject, 
     setIsOpenFormSubject,
+    isLoadedSubject, 
+    setIsLoadedSubject,
+    isLoadedDetailsSubject, 
+    setIsLoadedDetailsSubject,
+    idSubject,
   } = useGeneralHook2();
 
   // create
@@ -75,71 +76,67 @@ export const useSubjects = () => {
 
 
   //delete
-  const deleteField = async (fieldInfos: any) => {
+  const deleteSubject = async (subjectInfos: any) => {
     try {
-      await axiosInstance.delete("fields/" + fieldInfos.idFieldUpdt);
+      await axiosInstance.delete("subjects/" + subjectInfos.subjectId);
 
       toast.success("deleted successfully!!");
-      setIsOpenFormField(false);
+      setIsOpenFormSubject(false);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Error deleted");
     }
   };
-  const { mutate: deleteFieldMutation } = useMutation({
-    mutationFn: deleteField,
+  const { mutate: deleteSubjectMutation } = useMutation({
+    mutationFn: deleteSubject,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dataFields"] });
-      queryClient.invalidateQueries({ queryKey: ["dataChart2"] });
+      queryClient.invalidateQueries({ queryKey: ["dataSubject"] });
     },
   });
 
+
   // get All
   const {
-    error: errorGetFields,
-    data: allFields,
-    isError: isErrorGetFields,
+    data: allSubjects,
+    error: errorGetSubjects,
+    isError: isErrorGetSubjects,
   } = useQuery({
-    queryKey: ["dataFields"],
+    queryKey: ["dataSubject"],
     queryFn: async () => {
-    /* const { data } = await axios.get(baseUrl + "fieldsNotD", {
-        withCredentials: true,
-      });*/
-      const { data } = await axiosInstance.get("fieldsNotD"); // "fieldsNotD" automatically suffixed to the base url
-      setIsLoadedField(false);
+      const { data } = await axiosInstance.get("subjects"); 
+      setIsLoadedSubject(false);
       return data;
     },
     
   });
-  if (isErrorGetFields) toast.error(errorGetFields.message || "Error");
+  if (isErrorGetSubjects) toast.error(errorGetSubjects.message || "Error");
 
 
   // get Id
-  const { data: OneField } = useQuery({
-    queryKey: ["dataOneFields"],
+  const { data: OneSubject,
+          error: errorGetOneSubjects,
+          isError: isErrorGetOneSubjects, 
+        } = useQuery({
+    queryKey: ["dataOneSubject"],
     queryFn: async () => {
-     /* const { data } = await axios.get(baseUrl + "fields/" + idField, {
-        withCredentials: true,
-      });*/
-      const { data } = await axiosInstance.get("fields/" + idField);
-
-      setIsLoadedDetailsField(false);
+      const { data } = await axiosInstance.get("subjects/" + idSubject);
+      setIsLoadedDetailsSubject(false);
       return data;
     },
   });
-  if (isErrorGetFields) toast.error(errorGetFields.message || "Error");
+  if (isErrorGetOneSubjects) toast.error(errorGetOneSubjects.message || "Error");
 
   return {
-    allFields,
-    createFieldMutation,
-    updateFieldMutation,
-    deleteFieldMutation,
-    isOpenFormField,
-    setIsOpenFormField,
-    OneField,
-    setIsLoadedField,
-    isLoadedField,
-    isLoadedDetailsField,
-    setIsLoadedDetailsField,
+    allSubjects,
+    createSubjectMutation,
+    voteSubjectMutation,
+    deleteSubjectMutation,
+    isOpenFormSubject,
+    setIsOpenFormSubject,
+    OneSubject,
+    setIsLoadedSubject,
+    isLoadedSubject,
+    isLoadedDetailsSubject,
+    setIsLoadedDetailsSubject,
   };
 };
 
