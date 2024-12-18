@@ -4,7 +4,11 @@ const User = require("../models/user.model");
 
 module.exports.findAllSubject = async (req, res) => {
     try {
-      const allSubject = await Subject.find({ isDeleted: false }).sort({ name: 1 });
+      const allSubject = await Subject.find({ isDeleted: false }).sort({ name: 1 })
+      .populate({
+        path: "author",
+        match: { isDeleted: false },
+      });
       res.json(allSubject);
     } catch (err) {
       res.status(400).json(err);

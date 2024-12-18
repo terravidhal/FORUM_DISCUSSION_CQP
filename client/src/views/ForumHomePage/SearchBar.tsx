@@ -17,10 +17,10 @@ export function SearchBar({ onSearch }: SearchBarProps) {
         />
         <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
       </div>
-      <button className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center">
+      {/* <button className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center">
         <Filter className="h-5 w-5 mr-2" />
         Filters
-      </button>
+      </button> */}
     </div>
   );
 }
