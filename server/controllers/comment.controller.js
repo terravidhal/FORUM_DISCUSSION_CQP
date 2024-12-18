@@ -151,7 +151,9 @@ module.exports.createNewComment = async (req, res) => {
 
 
 module.exports.voteOnComment = async (req, res) => {
-  const { commentId, userId, value } = req.body;
+  //const { commentId, userId, value } = req.body;
+  const { userId, value } = req.body;
+  const commentId = req.params.commentId;
 
   try {
     // Validate the rating value

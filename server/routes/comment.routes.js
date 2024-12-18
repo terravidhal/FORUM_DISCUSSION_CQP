@@ -1,46 +1,46 @@
 const {
-  findAllSubject,
-  findDetailsSingleSubject,
-  createNewSubject,
-  deleteSubject,
-  voteOnSubject,
-} = require("../controllers/subject.controller");
+  findAllComment,
+  findDetailsSingleComment,
+  createNewComment,
+  deleteComment,
+  voteOnComment,
+} = require("../controllers/comment.controller");
 
 const { authenticate, checkPermissions, logActivityMiddleware } = require("../config/jwt.config");
 
 
 module.exports = (app) => {
   app.post(
-    "/api/subject",
+    "/api/comment",
     authenticate,
     logActivityMiddleware,
-    createNewSubject
+    createNewComment
   );
   app.get(
-    "/api/subjects",
+    "/api/comments",
     authenticate,
     logActivityMiddleware,
-    findAllSubject
+    findAllComment
   );
   app.get(
-    "/api/subjects/:id",
+    "/api/comments/:id",
     authenticate,
     logActivityMiddleware,
-    findDetailsSingleSubject
+    findDetailsSingleComment
   );
 
   app.patch(
-    "/api/subjects/:subjectid",
+    "/api/subjects/:commentId",
     authenticate,
     logActivityMiddleware,
-    voteOnSubject
+    voteOnComment
   );
 
   app.delete(
-    "/api/subjects/:subjectId",
+    "/api/comments/:commentId",
     authenticate,
     checkPermissions("superAdmin", "admin"),
     logActivityMiddleware,
-    deleteSubject
+    deleteComment
   );
 };

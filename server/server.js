@@ -53,36 +53,17 @@ AllMyAudLogRoutes(app);
 const AllMyPaymentRoutes = require("./routes/payment.routes");
 AllMyPaymentRoutes(app);
 
+
+//
 const AllMyUsersRoutes = require("./routes/user.routes");
 AllMyUsersRoutes(app);
 
+const AllMySubjectRoutes = require("./routes/subject.routes");
+AllMySubjectRoutes(app);
 
-
-
-const { pdfGenerator2 } = require("./controllers/certif.controller");
-
-// Basé sur les données de création du modèle page.hbs
-let data = {
-    name: "Terra Vidhal",
-    linkVerif: "https://example.com/verification-link", // Lien de vérification
-    course: "SevenGps Kids Code Course",
-    dateOfConductStart: "2023-01-01",
-    dateOfConductEnd: "2023-01-10",
-    dateOfCertif: "2023-01-15"
-};
-
-const fileName = "test_certif";
-
-/*
-(async () => {
-    try {
-        let buffer = await pdfGenerator2(fileName, data);
-        console.log("PDF généré avec succès!", buffer);
-    } catch (error) {
-        console.error("Erreur lors de la génération du PDF:", error);
-    }
-})();  */
-
+const AllMyCommentRoutes = require("./routes/comment.routes");
+AllMyCommentRoutes(app);
+//
 
 
 

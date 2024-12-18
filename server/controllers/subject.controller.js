@@ -101,7 +101,9 @@ module.exports.createNewSubject = async (req, res) => {
 
 
 module.exports.voteOnSubject = async (req, res) => {
-  const { subjectId, userId, value } = req.body;
+ // const { subjectId, userId, value } = req.body;
+  const { userId, value } = req.body;
+  const  subjectId = req.params.subjectid;
 
   try {
     // Validate the rating value
