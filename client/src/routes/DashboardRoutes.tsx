@@ -12,6 +12,7 @@ import DashBoardHomePage from "@/views/dashboard/pages/DashBoardHomePage/DashBoa
 import TemplatePage from "@/views/dashboard/pages/TemplatePage/TemplatePage";
 
 
+
 const DashboardRoutes = () => {
   return (
     <DashboardLayout>

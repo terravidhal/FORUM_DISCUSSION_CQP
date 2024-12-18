@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useGeneralHook } from "@/hooks/generalHook";
 import { useEffect } from "react";
+import { User2 } from 'lucide-react';
 
 const User = () => {
   const { logoutMutation } = useLogout();
@@ -27,7 +28,7 @@ const User = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
+        {/* <Button
           variant="outline"
           size="icon"
           className="overflow-hidden rounded-full"
@@ -37,7 +38,8 @@ const User = () => {
             alt="Avatar"
             className="w-[36px]  h-[36px] overflow-hidden rounded-full"
           />
-        </Button>
+        </Button> */}
+          <User2 className="h-6 w-6 text-gray-700" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

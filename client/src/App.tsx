@@ -6,6 +6,7 @@ import HomePageRoutes from "./routes/HomePageRoutes";
 import Error from "./views/Error/Error";
 import { UseProtectedRoute } from "./hooks/ProtectedRoute ";
 import ProfileUser from "./views/ProfileUser/ProfileUser";
+import ForumHomePage from "./views/ForumHomePage/ForumHomePage";
 
 const App = () => {
   const { ProtectedRoute } = UseProtectedRoute();
@@ -19,6 +20,15 @@ const App = () => {
         element={<VerifiedCertifPage2 />}
       />
       <Route path="/profile" element={<ProfileUser />} />
+      {/* <Route path="/homeForum" element={<ForumHomePage />} /> */}
+      <Route
+        path="/homeForum"
+        element={
+          <ProtectedRoute>
+            <ForumHomePage />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/dashboard/*"
         element={

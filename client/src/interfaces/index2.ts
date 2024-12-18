@@ -103,6 +103,7 @@ export const VoteSubjectSchema = SubjectSchema.partial().extend({
         })
       )
       .optional(),
+      subjectId : z.string().optional(),
 });
 
 export type Subject = z.infer<typeof SubjectSchema>;
@@ -190,6 +191,7 @@ export const voteCommentSchema = CommentSchema.partial().extend({
         .int({ message: "Rating must be an integer" })
     })
   ).optional(),
+  commentId : z.string().optional(),
 });
 
 export type Comment = z.infer<typeof CommentSchema>;

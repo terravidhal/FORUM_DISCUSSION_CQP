@@ -51,7 +51,7 @@ export const useLogin = () => {
       setIsLogginSuccess(true);
       toast.success("login successfully!!");
       localStorage.setItem("USER_OBJ", JSON.stringify(response.data.user));
-      navigate(`/dashboard`);
+      navigate(`/homeForum`);
     } catch (err: any) {
       setLogginError(true);
       toast.error(err.response?.data?.message || "Error login");
