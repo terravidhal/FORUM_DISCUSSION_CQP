@@ -11,6 +11,8 @@ export const useGeneralHook2 = () => {
   const [isLoadedComment, setIsLoadedComment] = useState(true);
   const [isLoadedDetailsComment, setIsLoadedDetailsComment] = useState(true);
   const { idComment } = useParams();
+  const [isLogginSuccess, setIsLogginSuccess] = useState(false);
+  const [logginError, setLogginError] = useState(false);
   
   return {
     isOpenFormSubject, 
@@ -27,5 +29,7 @@ export const useGeneralHook2 = () => {
     isLoadedDetailsComment, 
     setIsLoadedDetailsComment,
     idComment,
+    isLogginSuccess, setIsLogginSuccess,
+    logginError, setLogginError,
   };
 };

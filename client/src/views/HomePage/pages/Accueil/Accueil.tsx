@@ -1,11 +1,11 @@
-import AboutSectionOne from "../About/AboutSectionOne";
-import AboutSectionTwo from "../About/AboutSectionTwo";
-import Brands from "../Brands";
-import ScrollUp from "../Common/ScrollUp";
-import Contact from "../Contact";
-import Features from "../Features";
-import Hero from "../Hero";
-import Testimonials from "../Testimonials";
+import AboutSectionOne from "../../components/About/AboutSectionOne";
+import AboutSectionTwo from "../../components/About/AboutSectionTwo";
+import Brands from "../../components/Brands";
+import ScrollUp from "../../components/Common/ScrollUp";
+import Contact from "../../components/Contact";
+import Features from "../../components/Features";
+import Hero from "../../components/Hero";
+import Testimonials from "../../components/Testimonials";
 
 const Accueil = () => {
   return (

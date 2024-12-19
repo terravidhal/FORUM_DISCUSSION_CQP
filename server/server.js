@@ -4,9 +4,9 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const {seedAdmin} = require("./seeders/superAdmin.seeder"); 
 const PORT = process.env.SERVER_PORT || 8000
-const path = require('path');
+//const path = require('path');
 const app = express();
-const QRCode = require('qrcode');
+//const QRCode = require('qrcode');
 
 
 app.use(express.json(), express.urlencoded({ extended: true }));
@@ -21,14 +21,15 @@ app.use(
 app.use(cookieParser());
 
 // Servir les fichiers statiques
-app.use(express.static(path.join(__dirname, "./template/assets")));
-app.use(express.static("upload/templatesImages")); //Accès aux images du template côté serveur 
-app.use(express.static("upload/images")); //Accès aux images côté serveur 
+//app.use(express.static(path.join(__dirname, "./template/assets")));
+//app.use(express.static("upload/templatesImages")); //Accès aux images du template côté serveur 
+app.use(express.static("upload/subjectImages")); //Accès aux images côté serveur 
 //app.use(express.static(path.join(__dirname, '../upload/images')));
 
 
 require("./config/mongoose.config");
 
+/*
 const AllMyFieldsRoutes = require("./routes/field.routes");
 AllMyFieldsRoutes(app);
 
@@ -51,7 +52,7 @@ const AllMyAudLogRoutes = require("./routes/logCertif.routes");
 AllMyAudLogRoutes(app);
 
 const AllMyPaymentRoutes = require("./routes/payment.routes");
-AllMyPaymentRoutes(app);
+AllMyPaymentRoutes(app); */
 
 
 //

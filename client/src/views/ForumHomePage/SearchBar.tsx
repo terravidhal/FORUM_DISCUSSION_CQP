@@ -1,9 +1,7 @@
-import React from 'react';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter } from "lucide-react";
+import { SearchBarProps } from "@/interfaces/interfaces";
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-}
+
 
 export function SearchBar({ onSearch }: SearchBarProps) {
   return (

@@ -1,18 +1,19 @@
-import React from 'react';
-import { MessageSquare, Clock } from 'lucide-react';
+import { MessageSquare, Clock } from "lucide-react";
+import { ForumCardProps } from "@/interfaces/interfaces";
 
-interface ForumCardProps {
-  title: string;
-  author: any; // ObjectId de l'auteur
-  comments: string[]; // Remplacez par des ObjectIds de commentaires si nécessaire
-  tags: string[]; // Catégorie mappée sur "tags"
-  content: string; // Contenu de la publication
-  lastActivity: string; // Date ou timestamp de la dernière activité
-  ratings: number[]; // Évaluations, si nécessaire
-  isDeleted: boolean; // Indique si le post est supprimé
-}
 
-export function ForumCard({ title, author, comments, tags, content, lastActivity, ratings, isDeleted }: ForumCardProps) {
+
+
+export function ForumCard({
+  title,
+  author,
+  comments,
+  tags,
+  content,
+  lastActivity,
+  ratings,
+  isDeleted,
+}: ForumCardProps) {
   if (isDeleted) {
     return null; // Ne pas afficher le composant si le post est supprimé
   }
@@ -23,7 +24,10 @@ export function ForumCard({ title, author, comments, tags, content, lastActivity
         <div className="flex-1">
           <div className="flex flex-wrap space-x-2 mb-2">
             {tags.map((tag, index) => (
-              <span key={index} className="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">
+              <span
+                key={index}
+                className="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full"
+              >
                 {tag}
               </span>
             ))}
@@ -39,11 +43,13 @@ export function ForumCard({ title, author, comments, tags, content, lastActivity
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
             <MessageSquare className="w-4 h-4 mr-1" />
-            <span>{comments?.length} comments</span> {/* Affiche le nombre de commentaires */}
+            <span>{comments?.length} comments</span>{" "}
+            {/* Affiche le nombre de commentaires */}
           </div>
           <div className="flex items-center">
             <Clock className="w-4 h-4 mr-1" />
-            <span>{lastActivity}</span> {/* Vous pouvez formater cette date si nécessaire */}
+            <span>{lastActivity}</span>{" "}
+            {/* Vous pouvez formater cette date si nécessaire */}
           </div>
         </div>
       </div>

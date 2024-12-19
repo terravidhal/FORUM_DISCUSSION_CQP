@@ -2,20 +2,115 @@ import { toast } from "sonner";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/interceptors/axios.config";
 import { useGeneralHook2 } from "@/hooks/generalHook2";
-import { VoteSubjectSchema, createComment, createCommentSchema, createSubject, createSubjectSchema, voteComment, voteCommentSchema, voteSubject } from "@/interfaces/index2";
+import {
+  Login,
+  VoteSubjectSchema,
+  createComment,
+  createCommentSchema,
+  createSubject,
+  createSubjectSchema,
+  loginSchema,
+  voteComment,
+  voteCommentSchema,
+  voteSubject,
+} from "@/interfaces/index2";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import baseUrl from "@/constants/baseUrl";
 
 
 
+// login hook
+export const useLogin = () => {
+  const { isLogginSuccess, setIsLogginSuccess, logginError, setLogginError } =
+    useGeneralHook2();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // login hook
+  const login = async (userInfos: Login) => {
+    try {
+      const result = loginSchema.safeParse(userInfos);
+      if (!result?.success) {
+        Object.values(result.error)[0].map((elt: any) => {
+          toast.error(elt?.message);
+        });
+        return;
+      }
+      const response = await axios.post(baseUrl + "login", userInfos, {
+        withCredentials: true,
+      });
+      setIsLogginSuccess(true);
+      toast.success("login successfully!!");
+      localStorage.setItem("USER_OBJ", JSON.stringify(response.data.user));
+      navigate(`/homeForum`);
+    } catch (err: any) {
+      setLogginError(true);
+      toast.error(err.response?.data?.message || "Error login");
+    }
+  };
+
+  const { mutate: loginMutation } = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["datatAllOrgs"] });
+    },
+  });
+
+  return {
+    loginMutation,
+    isLogginSuccess,
+    logginError,
+  };
+};
+
+// logout hook
+export const useLogout = () => {
+  const navigate = useNavigate();
+  const logout = async () => {
+    try {
+      await axios.post(
+        baseUrl + "logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("logout successfully!!");
+      localStorage.removeItem("USER_OBJ");
+      navigate(`/`);
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "logout failed !!");
+    }
+  };
+  const {
+    mutate: logoutMutation,
+    isPending: isPendingLogout,
+    isError: isErrorLogout,
+    isSuccess: isSuccessLogout,
+    error: errorLogout,
+  } = useMutation({
+    mutationFn: logout,
+  });
+
+  return {
+    logoutMutation,
+    isPendingLogout,
+    isErrorLogout,
+    isSuccessLogout,
+    errorLogout,
+  };
+};
 
 //  subjects hook
 export const useSubjects = () => {
   const queryClient = useQueryClient();
   const {
-    isOpenFormSubject, 
+    isOpenFormSubject,
     setIsOpenFormSubject,
-    isLoadedSubject, 
+    isLoadedSubject,
     setIsLoadedSubject,
-    isLoadedDetailsSubject, 
+    isLoadedDetailsSubject,
     setIsLoadedDetailsSubject,
     idSubject,
   } = useGeneralHook2();
@@ -54,7 +149,7 @@ export const useSubjects = () => {
         });
         return;
       }
-  
+
       await axiosInstance.patch(
         "subjects/" + subjectInfos.subjectId,
         subjectInfos
@@ -72,8 +167,6 @@ export const useSubjects = () => {
       queryClient.invalidateQueries({ queryKey: ["dataSubject"] });
     },
   });
-
-
 
   //delete
   const deleteSubject = async (subjectInfos: any) => {
@@ -93,7 +186,6 @@ export const useSubjects = () => {
     },
   });
 
-
   // get All
   const {
     data: allSubjects,
@@ -102,20 +194,19 @@ export const useSubjects = () => {
   } = useQuery({
     queryKey: ["dataSubject"],
     queryFn: async () => {
-      const { data } = await axiosInstance.get("subjects"); 
+      const { data } = await axiosInstance.get("subjects");
       setIsLoadedSubject(false);
       return data;
     },
-    
   });
   if (isErrorGetSubjects) toast.error(errorGetSubjects.message || "Error");
 
-
   // get Id
-  const { data: OneSubject,
-          error: errorGetOneSubjects,
-          isError: isErrorGetOneSubjects, 
-        } = useQuery({
+  const {
+    data: OneSubject,
+    error: errorGetOneSubjects,
+    isError: isErrorGetOneSubjects,
+  } = useQuery({
     queryKey: ["dataOneSubject"],
     queryFn: async () => {
       const { data } = await axiosInstance.get("subjects/" + idSubject);
@@ -123,7 +214,8 @@ export const useSubjects = () => {
       return data;
     },
   });
-  if (isErrorGetOneSubjects) toast.error(errorGetOneSubjects.message || "Error");
+  if (isErrorGetOneSubjects)
+    toast.error(errorGetOneSubjects.message || "Error");
 
   return {
     allSubjects,
@@ -140,17 +232,15 @@ export const useSubjects = () => {
   };
 };
 
-
-
 //  comments hook
 export const useComments = () => {
   const queryClient = useQueryClient();
   const {
-    isOpenFormComment, 
+    isOpenFormComment,
     setIsOpenFormComment,
-    isLoadedComment, 
+    isLoadedComment,
     setIsLoadedComment,
-    isLoadedDetailsComment, 
+    isLoadedDetailsComment,
     setIsLoadedDetailsComment,
     idComment,
   } = useGeneralHook2();
@@ -189,7 +279,7 @@ export const useComments = () => {
         });
         return;
       }
-  
+
       await axiosInstance.patch(
         "comments/" + commentInfos.commentId,
         commentInfos
@@ -207,8 +297,6 @@ export const useComments = () => {
       queryClient.invalidateQueries({ queryKey: ["dataComment"] });
     },
   });
-
-
 
   //delete
   const deleteComment = async (commentInfos: any) => {
@@ -228,7 +316,6 @@ export const useComments = () => {
     },
   });
 
-
   // get All
   const {
     data: allComments,
@@ -237,20 +324,19 @@ export const useComments = () => {
   } = useQuery({
     queryKey: ["dataComment"],
     queryFn: async () => {
-      const { data } = await axiosInstance.get("comments"); 
+      const { data } = await axiosInstance.get("comments");
       setIsLoadedComment(false);
       return data;
     },
-    
   });
   if (isErrorGetComments) toast.error(errorGetComments.message || "Error");
 
-
   // get Id
-  const { data: OneComment,
-          error: errorGetOneComments,
-          isError: isErrorGetOneComments, 
-        } = useQuery({
+  const {
+    data: OneComment,
+    error: errorGetOneComments,
+    isError: isErrorGetOneComments,
+  } = useQuery({
     queryKey: ["dataOneSubject"],
     queryFn: async () => {
       const { data } = await axiosInstance.get("comments/" + idComment);
@@ -258,7 +344,8 @@ export const useComments = () => {
       return data;
     },
   });
-  if (isErrorGetOneComments) toast.error(errorGetOneComments.message || "Error");
+  if (isErrorGetOneComments)
+    toast.error(errorGetOneComments.message || "Error");
 
   return {
     allComments,

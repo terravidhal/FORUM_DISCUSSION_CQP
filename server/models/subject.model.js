@@ -10,6 +10,9 @@ const SubjectSchema = new mongoose.Schema(
         type: String,
         required: [true, "Error: content is required"],
       },
+      subjectName: {
+        type: String,
+      },
       author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User", 
@@ -58,5 +61,8 @@ const SubjectSchema = new mongoose.Schema(
     }
   );
   
-  module.exports = mongoose.model("Subject", SubjectSchema);
+
+const SubjectModel = mongoose.model("Subject", SubjectSchema);
+module.exports = SubjectModel;
+  
   

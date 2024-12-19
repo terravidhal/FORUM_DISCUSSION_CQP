@@ -1,6 +1,20 @@
 import { z } from "zod";
 
+// login
+const passwordValidation = new RegExp(
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+);
+export const loginSchema = z.object({
+  email: z.string().email({ message: "Enter valid email" }),
+  password: z
+    .string()
+    .regex(passwordValidation, {
+      message:
+        "password must contain at least one lowercase letter, one uppercase letter, one number and one special character, and be at least 8 characters long.",
+  }),
+});
 
+export type Login = z.infer<typeof loginSchema>;
 
 // Subject schema
 export const SubjectSchema = z.object({

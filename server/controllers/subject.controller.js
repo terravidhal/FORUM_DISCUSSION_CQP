@@ -43,13 +43,21 @@ module.exports.findAllSubject = async (req, res) => {
     }
   };
   
-  
+
   
   
 module.exports.createNewSubject = async (req, res) => {
+  const { filename } = req.file; // "file" object here pass to the query by multer
+  const { title, content, author } =  req.body;
+  const subjectName = filename;
   try {
     // Create a new subject
-    const newlyCreatedSubject = await Subject.create(req.body);
+    const newlyCreatedSubject = await Subject.create({
+      title, 
+      content, 
+      author,
+      subjectName,
+    });
 
     const userId = req.body.author
     // Find the user by the author ID 

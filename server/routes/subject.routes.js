@@ -7,13 +7,21 @@ const {
 } = require("../controllers/subject.controller");
 
 const { authenticate, checkPermissions, logActivityMiddleware } = require("../config/jwt.config");
-
+const { upload } = require("../config/multer.config");
 
 module.exports = (app) => {
   app.post(
     "/api/subjects",
     authenticate,
     logActivityMiddleware,
+    upload.single("subject"), // "name" attribute for "input subject"
+    (req, res, next) => {
+      if (!req.file) {
+        return res.status(400).send("Aucune image n'a été téléchargée.");
+      }
+      console.log("Fichier reçu :", req.file);
+      next();
+    },
     createNewSubject
   );
   app.get(

@@ -1,13 +1,13 @@
-import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { PaginationProps } from "@/interfaces/interfaces";
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}
 
-export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+
+export function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PaginationProps) {
   return (
     <div className="flex items-center justify-center space-x-2">
       <button
@@ -17,15 +17,15 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
-      
+
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
           className={`px-4 py-2 rounded-lg ${
             currentPage === page
-              ? 'bg-blue-600 text-white'
-              : 'hover:bg-gray-100 text-gray-700'
+              ? "bg-blue-600 text-white"
+              : "hover:bg-gray-100 text-gray-700"
           }`}
         >
           {page}

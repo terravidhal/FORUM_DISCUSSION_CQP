@@ -1,7 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import DashboardRoutes from "./routes/DashboardRoutes";
-//import VerifiedCertifPage from "./views/VerifiedCertifPage/VerifiedCertifPage";
-import VerifiedCertifPage2 from "./views/VerifiedCertifPage/VerifiedCertifPage2";
 import HomePageRoutes from "./routes/HomePageRoutes";
 import Error from "./views/Error/Error";
 import { UseProtectedRoute } from "./hooks/ProtectedRoute ";
@@ -15,12 +12,9 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Navigate replace to="/home" />} />
       <Route path="/home/*" element={<HomePageRoutes />} />
-      <Route
-        path="/verif/:CertifModel/:idStudentss"
-        element={<VerifiedCertifPage2 />}
-      />
+
       <Route path="/profile" element={<ProfileUser />} />
-      {/* <Route path="/homeForum" element={<ForumHomePage />} /> */}
+
       <Route
         path="/homeForum"
         element={
@@ -29,14 +23,7 @@ const App = () => {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/dashboard/*"
-        element={
-          <ProtectedRoute>
-            <DashboardRoutes />
-          </ProtectedRoute>
-        }
-      />
+
       <Route path="/*" element={<Error />} />
     </Routes>
   );
